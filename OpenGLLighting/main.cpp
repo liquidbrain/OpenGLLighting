@@ -161,50 +161,51 @@ void Render(GLFWwindow* window)
     glClearColor(0.1f, 0.1f, 0.1f, 1.0f);
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-    // Make the cube's shader part of the current rendering state and set its uniforms.
+    // Make the cube's shader part of the current rendering state.
     lightingShader.UseProgram();
+
+    // Set the cube's color.
     lightingShader.setVec3("objectColor", 1.0f, 0.5f, 0.31f);
     lightingShader.setVec3("lightColor",  1.0f, 1.0f, 1.0f);
 
-    // TODO
-    // view/projection transformations
+    // View/Projection transformations.
     glm::mat4 projection = glm::perspective(glm::radians(camera.Zoom), (float)WIDTH / (float)HEIGHT, 0.1f, 100.0f);
     glm::mat4 view = camera.GetViewMatrix();
     lightingShader.setMat4("projection", projection);
     lightingShader.setMat4("view", view);
 
-    // world transformation
+    // World transformation.
     glm::mat4 model;
     lightingShader.setMat4("model", model);
 
-    // render the cube
+    // Render the cube. For glDrawArrays(...):
+    // - first argument specifies what kind of primitives to render.
+    // - second argument specifies the start index
+    // - third argument specifies the number of indices
     glBindVertexArray(cubeVAO);
     glDrawArrays(GL_TRIANGLES, 0, 36);
 
-    // also draw the lamp object
+    // Make the lamp's shader part of the current rendering state.
     lampShader.UseProgram();
+
+    // View/Projection transformations.
     lampShader.setMat4("projection", projection);
     lampShader.setMat4("view", view);
+
+    // World transformations. Note that the lamp's cube is smaller than the main cube.
     model = glm::mat4();
     model = glm::translate(model, lightPos);
-    model = glm::scale(model, glm::vec3(0.2f)); // a smaller cube
+    model = glm::scale(model, glm::vec3(0.2f));
     lampShader.setMat4("model", model);
 
+    // Render the lamp. For glDrawArrays(...):
+    // - first argument specifies what kind of primitives to render.
+    // - second argument specifies the start index
+    // - third argument specifies the number of indices
     glBindVertexArray(lightVAO);
-    glDrawArrays(GL_TRIANGLES, 0, 36);  // TODO: Try with glDrawElements(GL_TRIANGLES, NBR_OF_INDICES, GL_UNSIGNED_INT, static_cast<GLvoid*>(0))
+    glDrawArrays(GL_TRIANGLES, 0, 36);
 
-    // glfw: swap buffers and poll IO events (keys pressed/released, mouse moved etc.)
-    // -------------------------------------------------------------------------------
     glfwSwapBuffers(window);
-
-#if 0
-    // Draw the mesh triangles.
-    // - first argument specifies what kind of primitive to render
-    // - second argument specifies the number of elements to render
-    // - third argument specifies the type of values in the indices
-    // - forth argument specifies a pointer to the location where the indices are stored
-    glDrawElements(GL_TRIANGLES, NBR_OF_INDICES, GL_UNSIGNED_INT, static_cast<GLvoid*>(0));
-#endif
 }
 
 /**

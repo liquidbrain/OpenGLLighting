@@ -122,7 +122,8 @@ public:
 
     // Processes input received from a mouse scroll-wheel event. Only requires input on the vertical
     // wheel-axis.
-    // TODO: Allow zooming in.
+    // This method does not support zooming out. A nice enhancement would be to make this method act
+    // more like zooming in/out with the keyboard.
     void ProcessMouseZoom(float yoffset) {
         if (Zoom >= 1.0f && Zoom <= 45.0f)
             Zoom -= yoffset;
@@ -137,6 +138,7 @@ public:
         WorldUp = glm::vec3(0.0f, 1.0f, 0.0f);
         Yaw = YAW;
         Pitch = PITCH;
+        Zoom = ZOOM;
         UpdateCameraVectors();
     }
 
