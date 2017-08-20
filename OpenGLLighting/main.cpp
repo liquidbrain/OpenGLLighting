@@ -59,13 +59,13 @@ static const GLuint WIDTH = 1280;
 static const GLuint HEIGHT = 960;
 
 static const char* LIGHTING_VERTEX_SHADER_PATH =
-        "/Users/john/Dev/OpenGL/LearnOpenGL/OpenGLLighting/OpenGLLighting/1.colors.vs";
+        "/Users/john/Dev/OpenGL/LearnOpenGL/OpenGLLighting/OpenGLLighting/cube.vs";
 static const char* LIGHTING_FRAGMENT_SHADER_PATH =
-        "/Users/john/Dev/OpenGL/LearnOpenGL/OpenGLLighting/OpenGLLighting/1.colors.fs";
+        "/Users/john/Dev/OpenGL/LearnOpenGL/OpenGLLighting/OpenGLLighting/cube.fs";
 static const char* LAMP_VERTEX_SHADER_PATH =
-        "/Users/john/Dev/OpenGL/LearnOpenGL/OpenGLLighting/OpenGLLighting/1.lamp.vs";
+        "/Users/john/Dev/OpenGL/LearnOpenGL/OpenGLLighting/OpenGLLighting/lamp.vs";
 static const char* LAMP_FRAGMENT_SHADER_PATH =
-        "/Users/john/Dev/OpenGL/LearnOpenGL/OpenGLLighting/OpenGLLighting/1.lamp.fs";
+        "/Users/john/Dev/OpenGL/LearnOpenGL/OpenGLLighting/OpenGLLighting/lamp.fs";
 
 GLSLProgram lightingShader;
 GLSLProgram lampShader;
