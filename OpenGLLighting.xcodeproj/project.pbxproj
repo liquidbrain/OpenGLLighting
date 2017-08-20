@@ -32,13 +32,13 @@
 		31DD01CAE7247489D0501973 /* libGLEW.dylib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = "compiled.mach-o.dylib"; name = libGLEW.dylib; path = /usr/local/Cellar/glew/2.0.0/lib/libGLEW.dylib; sourceTree = "<absolute>"; };
 		31DD029EDC3B7F8A055D172F /* GLSLProgram.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GLSLProgram.h; sourceTree = "<group>"; };
 		31DD02E9EF092B871752969B /* OpenGL.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGL.framework; path = System/Library/Frameworks/OpenGL.framework; sourceTree = SDKROOT; };
-		31DD0465A054426D0B99A2D3 /* 1.colors.vs */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = 1.colors.vs; sourceTree = "<group>"; };
+		31DD0465A054426D0B99A2D3 /* cube.vs */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = cube.vs; sourceTree = "<group>"; };
 		31DD050BBFB6BFECFAFCBE00 /* Camera.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Camera.h; sourceTree = "<group>"; };
 		31DD06A47B7456D6AF1561DB /* OpenGLLighting */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = OpenGLLighting; sourceTree = BUILT_PRODUCTS_DIR; };
-		31DD0A6233CA22FF8663CFB6 /* 1.lamp.fs */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = 1.lamp.fs; sourceTree = "<group>"; };
-		31DD0AE39ADB6001BA1576DA /* 1.lamp.vs */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = 1.lamp.vs; sourceTree = "<group>"; };
+		31DD0A6233CA22FF8663CFB6 /* lamp.fs */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = lamp.fs; sourceTree = "<group>"; };
+		31DD0AE39ADB6001BA1576DA /* lamp.vs */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = lamp.vs; sourceTree = "<group>"; };
 		31DD0BE3B9F3DE822EA2476F /* GLSLProgram.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = GLSLProgram.cpp; sourceTree = "<group>"; };
-		31DD0DB79AEDDDC03C249E60 /* 1.colors.fs */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = 1.colors.fs; sourceTree = "<group>"; };
+		31DD0DB79AEDDDC03C249E60 /* cube.fs */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = cube.fs; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -89,10 +89,10 @@
 				31DD029EDC3B7F8A055D172F /* GLSLProgram.h */,
 				31DD0BE3B9F3DE822EA2476F /* GLSLProgram.cpp */,
 				31DD050BBFB6BFECFAFCBE00 /* Camera.h */,
-				31DD0465A054426D0B99A2D3 /* 1.colors.vs */,
-				31DD0DB79AEDDDC03C249E60 /* 1.colors.fs */,
-				31DD0AE39ADB6001BA1576DA /* 1.lamp.vs */,
-				31DD0A6233CA22FF8663CFB6 /* 1.lamp.fs */,
+				31DD0465A054426D0B99A2D3 /* cube.vs */,
+				31DD0DB79AEDDDC03C249E60 /* cube.fs */,
+				31DD0AE39ADB6001BA1576DA /* lamp.vs */,
+				31DD0A6233CA22FF8663CFB6 /* lamp.fs */,
 			);
 			path = OpenGLLighting;
 			sourceTree = "<group>";
