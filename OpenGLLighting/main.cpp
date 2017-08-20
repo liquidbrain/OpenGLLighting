@@ -1,5 +1,7 @@
 /**
- * OpenGL lighting demo.
+ * OpenGL lighting demo using the Phong reflection model.
+ * Demo has two cubes, a larger cube that is the subject of our light source, and a smaller one that
+ * is used as the light source.
  *
  * A Vertex Shader in OpenGL is a piece of C like code written to the GLSL specification which
  * influences the attributes of a vertex. Vertex shaders can be used to modify properties of the
@@ -13,7 +15,7 @@
  * The shader pipeline behaves as follows:
  * Vertex Shaders -> Geometry Shaders -> (Rasterizing Engine) -> Fragment Shaders.
  *
- * A Vertex Array Object (VAO) is an object which contains one or more buffero bjects and is designed
+ * A Vertex Array Object (VAO) is an object which contains one or more buffer objects and is designed
  * to store the information for a complete rendered object. The shaders receive input data from our
  * VAO through a process of attribute binding, allowing us to perform the needed computations to provide
  * the desired results.
@@ -83,48 +85,49 @@ bool firstMouseCallback = true;
 float deltaTime = 0.0f;
 float lastFrame = 0.0f;
 
+// Position and normal data
 float vertices[] = {
-    -0.5f, -0.5f, -0.5f,
-     0.5f, -0.5f, -0.5f,
-     0.5f,  0.5f, -0.5f,
-     0.5f,  0.5f, -0.5f,
-    -0.5f,  0.5f, -0.5f,
-    -0.5f, -0.5f, -0.5f,
+    -0.5f, -0.5f, -0.5f,  0.0f,  0.0f, -1.0f,
+     0.5f, -0.5f, -0.5f,  0.0f,  0.0f, -1.0f,
+     0.5f,  0.5f, -0.5f,  0.0f,  0.0f, -1.0f,
+     0.5f,  0.5f, -0.5f,  0.0f,  0.0f, -1.0f,
+    -0.5f,  0.5f, -0.5f,  0.0f,  0.0f, -1.0f,
+    -0.5f, -0.5f, -0.5f,  0.0f,  0.0f, -1.0f,
 
-    -0.5f, -0.5f,  0.5f,
-     0.5f, -0.5f,  0.5f,
-     0.5f,  0.5f,  0.5f,
-     0.5f,  0.5f,  0.5f,
-    -0.5f,  0.5f,  0.5f,
-    -0.5f, -0.5f,  0.5f,
+    -0.5f, -0.5f,  0.5f,  0.0f,  0.0f,  1.0f,
+     0.5f, -0.5f,  0.5f,  0.0f,  0.0f,  1.0f,
+     0.5f,  0.5f,  0.5f,  0.0f,  0.0f,  1.0f,
+     0.5f,  0.5f,  0.5f,  0.0f,  0.0f,  1.0f,
+    -0.5f,  0.5f,  0.5f,  0.0f,  0.0f,  1.0f,
+    -0.5f, -0.5f,  0.5f,  0.0f,  0.0f,  1.0f,
 
-    -0.5f,  0.5f,  0.5f,
-    -0.5f,  0.5f, -0.5f,
-    -0.5f, -0.5f, -0.5f,
-    -0.5f, -0.5f, -0.5f,
-    -0.5f, -0.5f,  0.5f,
-    -0.5f,  0.5f,  0.5f,
+    -0.5f,  0.5f,  0.5f, -1.0f,  0.0f,  0.0f,
+    -0.5f,  0.5f, -0.5f, -1.0f,  0.0f,  0.0f,
+    -0.5f, -0.5f, -0.5f, -1.0f,  0.0f,  0.0f,
+    -0.5f, -0.5f, -0.5f, -1.0f,  0.0f,  0.0f,
+    -0.5f, -0.5f,  0.5f, -1.0f,  0.0f,  0.0f,
+    -0.5f,  0.5f,  0.5f, -1.0f,  0.0f,  0.0f,
 
-     0.5f,  0.5f,  0.5f,
-     0.5f,  0.5f, -0.5f,
-     0.5f, -0.5f, -0.5f,
-     0.5f, -0.5f, -0.5f,
-     0.5f, -0.5f,  0.5f,
-     0.5f,  0.5f,  0.5f,
+     0.5f,  0.5f,  0.5f,  1.0f,  0.0f,  0.0f,
+     0.5f,  0.5f, -0.5f,  1.0f,  0.0f,  0.0f,
+     0.5f, -0.5f, -0.5f,  1.0f,  0.0f,  0.0f,
+     0.5f, -0.5f, -0.5f,  1.0f,  0.0f,  0.0f,
+     0.5f, -0.5f,  0.5f,  1.0f,  0.0f,  0.0f,
+     0.5f,  0.5f,  0.5f,  1.0f,  0.0f,  0.0f,
 
-    -0.5f, -0.5f, -0.5f,
-     0.5f, -0.5f, -0.5f,
-     0.5f, -0.5f,  0.5f,
-     0.5f, -0.5f,  0.5f,
-    -0.5f, -0.5f,  0.5f,
-    -0.5f, -0.5f, -0.5f,
+    -0.5f, -0.5f, -0.5f,  0.0f, -1.0f,  0.0f,
+     0.5f, -0.5f, -0.5f,  0.0f, -1.0f,  0.0f,
+     0.5f, -0.5f,  0.5f,  0.0f, -1.0f,  0.0f,
+     0.5f, -0.5f,  0.5f,  0.0f, -1.0f,  0.0f,
+    -0.5f, -0.5f,  0.5f,  0.0f, -1.0f,  0.0f,
+    -0.5f, -0.5f, -0.5f,  0.0f, -1.0f,  0.0f,
 
-    -0.5f,  0.5f, -0.5f,
-     0.5f,  0.5f, -0.5f,
-     0.5f,  0.5f,  0.5f,
-     0.5f,  0.5f,  0.5f,
-    -0.5f,  0.5f,  0.5f,
-    -0.5f,  0.5f, -0.5f,
+    -0.5f,  0.5f, -0.5f,  0.0f,  1.0f,  0.0f,
+     0.5f,  0.5f, -0.5f,  0.0f,  1.0f,  0.0f,
+     0.5f,  0.5f,  0.5f,  0.0f,  1.0f,  0.0f,
+     0.5f,  0.5f,  0.5f,  0.0f,  1.0f,  0.0f,
+    -0.5f,  0.5f,  0.5f,  0.0f,  1.0f,  0.0f,
+    -0.5f,  0.5f, -0.5f,  0.0f,  1.0f,  0.0f
 };
 
 int main(int argc, const char * argv[])
@@ -164,9 +167,11 @@ void Render(GLFWwindow* window)
     // Make the cube's shader part of the current rendering state.
     lightingShader.UseProgram();
 
-    // Set the cube's color.
+    // Set the cube's color, the color and position of the light, and the camera's position.
     lightingShader.setVec3("objectColor", 1.0f, 0.5f, 0.31f);
     lightingShader.setVec3("lightColor",  1.0f, 1.0f, 1.0f);
+    lightingShader.setVec3("lightPos", lightPos);
+    lightingShader.setVec3("viewPos", camera.Position);
 
     // View/Projection transformations.
     glm::mat4 projection = glm::perspective(glm::radians(camera.Zoom), (float)WIDTH / (float)HEIGHT, 0.1f, 100.0f);
@@ -293,13 +298,23 @@ void InitShaders()
             0,                      // vertex attribute to configure
             3,                      // size of the vertex attribute (vec3 has 3 values)
             GL_FLOAT,               // data is GL_FLOAT
-            GL_FALSE,               // normalize data
-            3 * sizeof(float),      // space between consecutive attributes (XYZ)
+            GL_FALSE,               // don't normalize data
+            6 * sizeof(float),      // stride between consecutive attributes: XYZ for position and normals
             (void*)0);              // position data offset is 0
     glEnableVertexAttribArray(0);
 
+    // Normal attribute
+    glVertexAttribPointer(
+            1,                      // vertex attribute to configure
+            3,                      // size of the vertex attribute (vec3 has 3 values)
+            GL_FLOAT,               // data is GL_FLOAT
+            GL_FALSE,               // don't normalize data
+            6 * sizeof(float),      // stride between consecutive attributes: XYZ for position and normals
+            (void*)(3 * sizeof(float)));    // normal data offset is 3
+    glEnableVertexAttribArray(1);
+
     // Create the lamp's Vertex Array Object for the lamp and bind to it.
-    // Note we're still bound to the VBO from above.
+    // Note we're still bound to the VBO from above -- the vertices are the same.
     glGenVertexArrays(1, &lightVAO);
     glBindVertexArray(lightVAO);
 
@@ -308,8 +323,8 @@ void InitShaders()
             0,                      // vertex attribute to configure
             3,                      // size of the vertex attribute (vec3 has 3 values)
             GL_FLOAT,               // data is GL_FLOAT
-            GL_FALSE,               // normalize data
-            3 * sizeof(float),      // space between consecutive attributes (XYZ)
+            GL_FALSE,               // don't normalize data
+            6 * sizeof(float),      // stride between consecutive attributes: XYZ for position and (unused) normals
             (void*)0);              // position data offset is 0
     glEnableVertexAttribArray(0);
 }
