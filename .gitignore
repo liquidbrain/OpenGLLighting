@@ -1,3 +1,14 @@
-# AppCode
-.idea
+# macOS
+.DS_Store
 
+# Xcode
+project.xcworkspace/xcuserdata/
+xcuserdata/
+*.xcuserstate
+
+# Xcode Playgrounds
+timeline.xctimeline
+playground.xcworkspace
+
+# AppCode
+.idea/
