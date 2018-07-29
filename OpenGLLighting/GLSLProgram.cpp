@@ -57,14 +57,14 @@ void GLSLProgram::AddShader(GLenum shaderType, const GLchar* const source)
 }
 
 // Build and compile a shader
-void GLSLProgram::AddShader(GLenum shaderType, const std::string &source)
+void GLSLProgram::AddShader(GLenum shaderType, const std::string& source)
 {
     const char* sourceAsChar = source.c_str();
     AddShader(shaderType, sourceAsChar);
 }
 
 // Build and compile a shader
-void GLSLProgram::AddShaderFromFile(GLenum shaderType, const std::string &filename)
+void GLSLProgram::AddShaderFromFile(GLenum shaderType, const std::string& filename)
 {
     std::ifstream inputStream;
     inputStream.exceptions(std::ifstream::failbit | std::ifstream::badbit);
@@ -80,7 +80,7 @@ void GLSLProgram::AddShaderFromFile(GLenum shaderType, const std::string &filena
         std::string shaderSourceAsString = shaderSource.str();
         AddShader(shaderType, shaderSourceAsString);
     }
-    catch(std::ifstream::failure e) {
+    catch(std::ios_base::failure& e) {
         std::cerr << "GLSLProgram::AddShaderFromFile: " << filename << " " << e.what() << " error code: " << e.code() << std::endl;
     }
 }
