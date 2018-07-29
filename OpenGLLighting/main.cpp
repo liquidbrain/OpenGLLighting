@@ -50,7 +50,8 @@ void HandleDirectionalKeys(GLFWwindow *window);
 void GlfwErrorCallback(int error, const char* description);
 void GlfwFramebufferResizeCallback(GLFWwindow *window, int width, int height);
 void GlfwKeyCallback(GLFWwindow* window, int key, int scancode, int action, int mode);
-void GlfwMouseCallback(GLFWwindow* window, double xpos, double ypos);
+void GlfwMousePositionCallback(GLFWwindow* window, double xpos, double ypos);
+void GlfwMouseButtonCallback(GLFWwindow* window, int button, int action, int mods);
 void GLfwMouseScrollWheelCallback(GLFWwindow* window, double xoffset, double yoffset);
 void GlfwWindowRefreshCallback(GLFWwindow* window);
 
@@ -78,9 +79,9 @@ Camera camera(glm::vec3(0.0f, 0.0f, 6.0f));
 
 glm::vec3 lightPos(1.2f, 1.0f, 2.0f);
 
-float lastX = WIDTH / 2.0f;
-float lastY = HEIGHT / 2.0f;
-bool firstMouseCallback = true;
+float lastX = 0.0f;
+float lastY = 0.0f;
+uint mouseCallbackNbr = true;
 
 float deltaTime = 0.0f;
 float lastFrame = 0.0f;
@@ -250,7 +251,8 @@ GLFWwindow* InitGlfw()
     glfwSetFramebufferSizeCallback(window, GlfwFramebufferResizeCallback);
     //glfwSetWindowRefreshCallback(window, GlfwWindowRefreshCallback);
     glfwSetKeyCallback(window, GlfwKeyCallback);
-    glfwSetCursorPosCallback(window, GlfwMouseCallback);
+    glfwSetCursorPosCallback(window, GlfwMousePositionCallback);
+    glfwSetMouseButtonCallback(window, GlfwMouseButtonCallback);
     glfwSetScrollCallback(window, GLfwMouseScrollWheelCallback);
     glfwSetErrorCallback(GlfwErrorCallback);
 
@@ -376,21 +378,34 @@ void GlfwKeyCallback(GLFWwindow* window, int key, int scancode, int action, int 
 /**
  * Called whenever the mouse moves.
  */
-void GlfwMouseCallback(GLFWwindow* window, double xpos, double ypos)
+void GlfwMousePositionCallback(GLFWwindow* window, double xpos, double ypos)
 {
-    if (firstMouseCallback) {
+    if (mouseCallbackNbr > 1) {
+        float xoffset = xpos - lastX;
+        float yoffset = lastY - ypos;   // reversed since y-coordinates go from bottom to top
+
         lastX = xpos;
         lastY = ypos;
-        firstMouseCallback = false;
+
+        camera.ProcessMouseMovement(xoffset, yoffset);
     }
+    else if (mouseCallbackNbr == 1) {
+        lastX = xpos;
+        lastY = ypos;
 
-    float xoffset = xpos - lastX;
-    float yoffset = lastY - ypos;   // reversed since y-coordinates go from bottom to top
+        ++mouseCallbackNbr;
+    }
+    else {  // mouseCallbackNbr == 0
+        // Debounce the first mouse position; approximately half of the time we get an incorrect
+        // xpos and ypos. This causes the camera to ends up in the wrong location once the mouse
+        // is moved.
+        ++mouseCallbackNbr;
+    }
+}
 
-    lastX = xpos;
-    lastY = ypos;
-
-    camera.ProcessMouseMovement(xoffset, yoffset);
+void GlfwMouseButtonCallback(GLFWwindow* window, int button, int action, int mods)
+{
+    // TODO
 }
 
 /**
