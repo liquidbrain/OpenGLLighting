@@ -378,6 +378,7 @@ void GlfwKeyCallback(GLFWwindow* window, int key, int scancode, int action, int 
 /**
  * Called whenever the mouse moves.
  */
+// TODO: Consider using two different mouse callback functions, one for init and one for tracking.
 void GlfwMousePositionCallback(GLFWwindow* window, double xpos, double ypos)
 {
     if (mouseCallbackNbr > 1) {
