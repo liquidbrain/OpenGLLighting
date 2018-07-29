@@ -79,9 +79,9 @@ Camera camera(glm::vec3(0.0f, 0.0f, 6.0f));
 
 glm::vec3 lightPos(1.2f, 1.0f, 2.0f);
 
-float lastX = 0.0f;
-float lastY = 0.0f;
-uint mouseCallbackNbr = true;
+float lastX = std::numeric_limits<int>::min();
+float lastY = std::numeric_limits<int>::min();
+uint mouseCallbackNbr = 0;
 
 float deltaTime = 0.0f;
 float lastFrame = 0.0f;
@@ -403,10 +403,21 @@ void GlfwMousePositionCallback(GLFWwindow* window, double xpos, double ypos)
         ++mouseCallbackNbr;
     }
 }
-
+/**
+ * Called whenever a mouse button is clicked.
+ */
 void GlfwMouseButtonCallback(GLFWwindow* window, int button, int action, int mods)
 {
-    // TODO
+#if 0
+    if (button == GLFW_MOUSE_BUTTON_LEFT && action == GLFW_PRESS) {
+        // Normalize the x and y coordinates where the left mouse button is pressed, and invert the
+        // y axis.
+        float x = (2.0f * [GET X FROM GLFW HERE]) / WIDTH - 1.0f;
+        float y = 1.0f - (2.0f * [GET X FROM GLFW HERE]) / HEIGHT;
+
+        std::cout << "Mouse button clicked at x: " << x << " y: " << y << std::endl;
+    }
+#endif
 }
 
 /**
