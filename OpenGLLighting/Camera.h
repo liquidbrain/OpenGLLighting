@@ -32,7 +32,7 @@ static const float ZOOM        =  45.0f;
 
 // An abstract camera class that processes input and calculates the corresponding Euler angles,
 // vectors and matrices for use in OpenGL.
-class Camera
+class Camera final
 {
 public:
     // Camera attributes
