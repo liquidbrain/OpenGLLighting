@@ -51,7 +51,6 @@ void GlfwErrorCallback(int error, const char* description);
 void GlfwFramebufferResizeCallback(GLFWwindow *window, int width, int height);
 void GlfwKeyCallback(GLFWwindow* window, int key, int scancode, int action, int mode);
 void GlfwMousePositionCallback(GLFWwindow* window, double xpos, double ypos);
-void GlfwMouseButtonCallback(GLFWwindow* window, int button, int action, int mods);
 void GLfwMouseScrollWheelCallback(GLFWwindow* window, double xoffset, double yoffset);
 void GlfwWindowRefreshCallback(GLFWwindow* window);
 
@@ -252,7 +251,6 @@ GLFWwindow* InitGlfw()
     //glfwSetWindowRefreshCallback(window, GlfwWindowRefreshCallback);
     glfwSetKeyCallback(window, GlfwKeyCallback);
     glfwSetCursorPosCallback(window, GlfwMousePositionCallback);
-    glfwSetMouseButtonCallback(window, GlfwMouseButtonCallback);
     glfwSetScrollCallback(window, GLfwMouseScrollWheelCallback);
     glfwSetErrorCallback(GlfwErrorCallback);
 
@@ -378,7 +376,6 @@ void GlfwKeyCallback(GLFWwindow* window, int key, int scancode, int action, int 
 /**
  * Called whenever the mouse moves.
  */
-// TODO: Consider using two different mouse callback functions, one for init and one for tracking.
 void GlfwMousePositionCallback(GLFWwindow* window, double xpos, double ypos)
 {
     if (mouseCallbackNbr > 1) {
@@ -402,22 +399,6 @@ void GlfwMousePositionCallback(GLFWwindow* window, double xpos, double ypos)
         // is moved.
         ++mouseCallbackNbr;
     }
-}
-/**
- * Called whenever a mouse button is clicked.
- */
-void GlfwMouseButtonCallback(GLFWwindow* window, int button, int action, int mods)
-{
-#if 0
-    if (button == GLFW_MOUSE_BUTTON_LEFT && action == GLFW_PRESS) {
-        // Normalize the x and y coordinates where the left mouse button is pressed, and invert the
-        // y axis.
-        float x = (2.0f * [GET X FROM GLFW HERE]) / WIDTH - 1.0f;
-        float y = 1.0f - (2.0f * [GET X FROM GLFW HERE]) / HEIGHT;
-
-        std::cout << "Mouse button clicked at x: " << x << " y: " << y << std::endl;
-    }
-#endif
 }
 
 /**
